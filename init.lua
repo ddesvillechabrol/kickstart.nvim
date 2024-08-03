@@ -502,6 +502,7 @@ require('lazy').setup({
         zls = {},
         tsserver = {},
         tailwindcss = {},
+        eslint = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -580,7 +581,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         typescript = { 'prettierd' },
         typescriptreact = { 'prettierd' },
-        python = { 'ruff' },
+        python = { 'ruff_format', 'ruff_organize_imports' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

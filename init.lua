@@ -109,6 +109,9 @@ vim.keymap.set('x', '<leader>p', [["_dP]], { desc = '[P]aste without override cl
 vim.keymap.set('n', '<leader>d', [["_d]], { desc = '[D]elete without override clipboard' })
 vim.keymap.set('v', '<leader>d', [["_d]], { desc = '[D]elete without override clipboard' })
 
+-- Close buffer
+vim.keymap.set('n', '<C-c>', '<cmd>bp|bd #<CR>', { desc = 'Close current buffer' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -244,6 +247,7 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local actions = require 'telescope.actions'
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -254,6 +258,13 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          mappings = {
+            n = {
+              ['<C-S-d>'] = actions.delete_buffer,
+            },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -500,7 +511,7 @@ require('lazy').setup({
         },
         rust_analyzer = {},
         zls = {},
-        tsserver = {},
+        ts_ls = {},
         tailwindcss = {},
         eslint = {},
         lua_ls = {
@@ -534,6 +545,8 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
         'prettierd', -- Used to format typescript
         'ruff-lsp',
+        'hadolint',
+        'markdownlint',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -570,7 +583,7 @@ require('lazy').setup({
       notify_on_error = false,
       format_on_save = function(bufnr)
         -- Disable autoformat on certain filetypes
-        local ignore_filetypes = { 'typescript', 'typescriptreact' }
+        local ignore_filetypes = { 'typescript', 'typescriptreact', 'python' }
         if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
           return
         end
@@ -793,9 +806,9 @@ require('lazy').setup({
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
+        additional_vim_regex_highlighting = { 'ruby', 'python' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { 'ruby', 'python' } },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`

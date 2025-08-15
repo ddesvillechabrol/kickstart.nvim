@@ -15,4 +15,19 @@ return {
   {
     'Vimjas/vim-python-pep8-indent',
   },
+  {
+    "shortcuts/no-neck-pain.nvim",
+    version = "*",
+    config = function()
+      require('no-neck-pain').setup({
+        width = 150,
+        buffers = {
+          scratchPad = {
+            enabled = true,
+          },
+        },
+      })
+      vim.keymap.set('n', '<leader>z', '<cmd>NoNeckPain<cr>', { desc = 'Toggle zen mod' })
+    end,
+  },
 }
